@@ -16,3 +16,23 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+//creating route prefix for api
+$router->group(['prefix'=>'api'], function($router){
+    
+    //route for author 
+    $router->get('author', 'AuthorController@showAllAuthor');
+    $router->get('author/{author_id}','AuthorController@showOneAuthor');
+    $router->post('author', 'AuthorController@create');
+    $router->put('author/{author_id}','AuthorController@update');
+    $router->delete('author/{author_id}', 'AuthorController@delete');
+
+    //route for post
+    $router->get('post', 'PostController@showAllPost');
+    $router->get('post/{post_id}', 'PostController@showOnepost');
+    $router->post('post', 'PostController@create');
+    $router->put('post/{post_id}', 'PostController@update');
+    $router->delete('post/{post_id}', 'PostController@delete');
+
+    //route for comment
+});
