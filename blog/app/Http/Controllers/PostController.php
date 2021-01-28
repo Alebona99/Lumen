@@ -23,8 +23,8 @@ class PostController extends Controller
     }
 
     //function to show one post
-    public function showOnePost($post){
-        $post = Post::find($post);
+    public function showOnePost($post_id){
+        $post = Post::find($post_id);
         return response()->json($post);
     
     }
