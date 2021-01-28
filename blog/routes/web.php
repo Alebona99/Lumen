@@ -35,4 +35,9 @@ $router->group(['prefix'=>'api'], function($router){
     $router->delete('post/{post_id}', 'PostController@delete');
 
     //route for comment
+    $router->get('comment', 'CommentController@showAllComment');
+    $router->get('comment/{comment_id}', 'CommentController@showOneComment');
+    $router->post('comment', 'CommentController@create');
+    $router->put('comment/{comment_id}', 'CommentController@update');
+    $router->delete('comment/{comment_id}', 'CommentController@delete');
 });
