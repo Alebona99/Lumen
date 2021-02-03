@@ -26,4 +26,11 @@ class Kernel extends ConsoleKernel
     {
         //
     }
+    /*
+    protected $routeMiddleware= [
+
+        'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class
+    ];
+    */
 }
+
