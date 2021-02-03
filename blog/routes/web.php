@@ -17,27 +17,42 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-//creating route prefix for api
-$router->group(['prefix'=>'api'], function($router){
+//creating route prefix for api with a middleware
+$router->group(['middleware' => 'auth', 'prefix'=>'api'], function($router){
     
     //route for author 
-    $router->get('author', 'AuthorController@showAllAuthor');
-    $router->get('author/{author_id}','AuthorController@showOneAuthor');
-    $router->post('author', 'AuthorController@create');
-    $router->put('author/{author_id}','AuthorController@update');
-    $router->delete('author/{author_id}', 'AuthorController@delete');
+    $router->get('author', ['uses' => 'AuthorController@showAllAuthor']);
+    $router->get('author/{author_id}', ['uses' => 'AuthorController@showOneAuthor']);
+    $router->post('author', ['uses' => 'AuthorController@create']);
+    $router->put('author/{author_id}',['uses' => 'AuthorController@update']);
+    $router->delete('author/{author_id}', ['uses' => 'AuthorController@delete']);
 
     //route for post
-    $router->get('post', 'PostController@showAllPost');
-    $router->get('post/{post_id}', 'PostController@showOnepost');
-    $router->post('post', 'PostController@create');
-    $router->put('post/{post_id}', 'PostController@update');
-    $router->delete('post/{post_id}', 'PostController@delete');
+    $router->get('post', ['uses' => 'PostController@showAllPost']);
+    $router->get('post/{post_id}', ['uses' => 'PostController@showOnepost']);
+    $router->post('post', ['uses' => 'PostController@create']);
+    $router->put('post/{post_id}', ['uses' => 'PostController@update']);
+    $router->delete('post/{post_id}',  ['uses' => 'PostController@delete']);
 
     //route for comment
-    $router->get('comment', 'CommentController@showAllComment');
-    $router->get('comment/{comment_id}', 'CommentController@showOneComment');
-    $router->post('comment', 'CommentController@create');
-    $router->put('comment/{comment_id}', 'CommentController@update');
-    $router->delete('comment/{comment_id}', 'CommentController@delete');
+    $router->get('comment', ['uses' => 'CommentController@showAllComment']);
+    $router->get('comment/{comment_id}', ['uses' => 'CommentController@showOneComment']);
+    $router->post('comment', ['uses' => 'CommentController@create']);
+    $router->put('comment/{comment_id}', ['uses' => 'CommentController@update']);
+    $router->delete('comment/{comment_id}', ['uses' => 'CommentController@delete']);
 });
+
+
+//adding router group for the user
+$router->group(['prefix'=>'user'], function($router){
+
+//login and register
+$router->post('login', ['uses' => 'AuthController@login']);
+$router->post('register', ['uses' => 'AuthController@register']);
+
+//route for user profile
+$router->get('profile', ['uses' => 'UserController@profile']);
+$router->get('user', ['uses' => 'UserController@allUser']);
+$router->get('user/{id}', ['uses' => 'UserController@singleUser']);
+});
+

@@ -3,9 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\User;
+use Tymon\JWTAuth;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
-class Authenticate
+class Authenticate 
 {
     /**
      * The authentication guard factory instance.
@@ -41,4 +43,9 @@ class Authenticate
 
         return $next($request);
     }
+
+
+
+
+
 }
