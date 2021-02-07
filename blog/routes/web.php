@@ -56,3 +56,6 @@ $router->get('user', ['uses' => 'UserController@allUser']);
 $router->get('user/{id}', ['uses' => 'UserController@singleUser']);
 });
 
+
+//test hello function for add job to queue
+$router->get('hello', ['uses' => 'HelloController@helloadd']);
