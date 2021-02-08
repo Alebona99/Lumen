@@ -6,7 +6,6 @@ use App\Mails\ImportDeliveryOrderSuccessReport;
 use App\Models\DeliveryOrderHistory;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-use Log;
 
 class HelloJob extends Job
 {
