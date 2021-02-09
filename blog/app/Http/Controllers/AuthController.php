@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\SubmitEmailJob;
+use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
     /**
@@ -23,6 +25,17 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
 
+        //control if the user exist
+        $duplicate_user = DB::table('users')
+        ->where('name', 'LIKE', $request->input('name'))
+        ->where('email', 'LIKE', $request->input('email'))
+        ->first();
+
+        if($duplicate_user) {
+            return response('This user already exists', 422);
+        }
+
+
         try {
 
             $user = new User;
@@ -32,6 +45,14 @@ class AuthController extends Controller
             $user->password = app('hash')->make($plainPassword);
 
             $user->save();
+
+            //confirmation email
+            $details = [
+                'name'    => $request->input('name'), 
+                'email'   => $request->input('email'),
+            ];
+        
+            Queue::push(new SubmitEmailJob($details));
 
             //return successful response
             return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
