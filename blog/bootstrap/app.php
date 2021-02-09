@@ -27,6 +27,21 @@ $app->withFacades();
 
 $app->withEloquent();
 
+$app->withFacades(true, [
+    'Illuminate\Support\Facades\Mail' => 'Mail',
+    ]);
+    
+    $app->configure('app');
+    $app->configure('services');
+    $app->configure('mail');
+    
+    $app->register(Illuminate\Mail\MailServiceProvider::class);
+    /*$app->alias('mail.manager', Illuminate\Mail\MailManager::class);
+    $app->alias('mail.manager', Illuminate\Contracts\Mail\Factory::class);
+    $app->alias('mailer', Illuminate\Mail\Mailer::class);
+    $app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
+    $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -102,6 +117,7 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(\Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(\Illuminate\Redis\RedisServiceProvider::class);
+$app->configure('database');
 
 /*
 $app->withFacades(true, ['\Tymon\JWTAuth\Facades\JWTAuth' =>'JWTAuth']);
